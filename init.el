@@ -628,51 +628,9 @@
   )
 
 
-;; ==== Set via customize ====
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(LaTeX-font-list
-   (quote
-	((1 "" "" "\\mathcal{" "}")
-	 (2 "\\textbf{" "}" "\\mathbf{" "}")
-	 (3 "\\textsc{" "}" "\\mathfrak{" "}")
-	 (5 "\\emph{" "}")
-	 (6 "\\textsf{" "}" "\\mathsf{" "}")
-	 (9 "\\textit{" "}" "\\mathit{" "}")
-	 (13 "\\textmd{" "}")
-	 (14 "\\textnormal{" "}" "\\mathnormal{" "}")
-	 (18 "\\textrm{" "}" "\\mathrm{" "}")
-	 (19 "\\textsl{" "}" "\\mathbb{" "}")
-	 (20 "\\texttt{" "}" "\\mathtt{" "}")
-	 (21 "\\textup{" "}")
-	 (4 "" "" t))))
- '(ansi-color-names-vector
-   ["#151515" "#953331" "#546a29" "#909737" "#385e6b" "#7f355e" "#34676f" "#c6a57b"])
- '(bell-colour "#ba5b34" t)
- '(custom-safe-themes
-   (quote
-	("80e737868cf52590e216248417e83d67f4cd460f5d7b218a8763e98a07e7fdbb" "28fca4495c96a7f6ff5a023ba8596142411a85654b794163696aa2dddd048f0e" "5d66202be964f1ea39af389954113ab680f820d6fbfe2d7a5890ab0580505066" "e0be2b76041de26361162c2ae02239f351a2529f21be7e6e9cb8ab1ac92f757c" "8eee5058efccc94fd0882480c00cb0ae8f742a2300a40b622d7fb15559c5c6b9" "28c3b7eaa62751af002ba315d43d2ffa6f48eb83557d6be66c0e5e1002e3687b" "0d4ebc5297d805181a5ede19a2258663f9d4646719fc4863a54d460953526dea" "15c96f9c09f01c83fa5ec991c607631612f9e216f0f3e5b22dac9ee8b5e5f712" "b3caa8f0ac5dee8a9aa99f2c5ce317d613f68160daabb8141e647720f2a95377" "481011862a18eaf6d90ea94c158a7e07214bd26c029379cde53976d3e126467d" "82415fe2af31253b89ed131d3039589497aaa770c2dcc64220f42766239fcb0d" "62066ed3ca7e6148e9de248e6c4ed766fa0463f03312712146d1c0e896a6ed0b" "8d0634a5db771897c4c4bacba6dba96417d330dfb07f18719a7031faea1e515b" "d4c8482ced536648b4171b62884950cbcf7fc9bc8ef1c356cad9dc0713a5b715" "2bc994f04f2c1f5761c398b677c347a2c955a929a1a34a05d9853f651ed53397" "d9adc25352060023630de73bac322ddf2ced3abedcfc3d100ee557d24079ed3f" "755afdcbf92ff45cba39321ce3cd8dc1b6db8189088861c060ddf4f54233ff5b" default)))
- '(fci-rule-color "#505050")
- '(flyspell-delayed-commands
-   (quote
-	(<mouse-4> <mouse-5> <down-mouse-4> <down-mouse-5> <double-mouse-4> <double-mouse-5> <double-down-mouse-4> <double-down-mouse-5> <triple-mouse-4> <triple-mouse-5> <triple-down-mouse-4> <triple-down-mouse-5>)))
- '(markdown-fontify-code-blocks-natively t)
- '(package-selected-packages
-   (quote
-	(auctex avy ess fill-column-indicator matlab-mode benchmark-init browse-kill-ring company company-go company-lsp company-math company-quickhelp company-web fireplace gnu-elpa-keyring-update go-eldoc go-mode go-playground go-rename golint lsp-mode magit markdown-mode powerthesaurus rainbow-mode sage-shell-mode say-what-im-doing transpose-frame xterm-color web-mode)))
- '(preview-default-option-list
-   (quote
-	("displaymath" "floats" "graphics" "textmath" "footnotes")))
- '(show-paren-mode t))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;; === Setup customize ===
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
 
 
 
