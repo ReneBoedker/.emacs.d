@@ -1,0 +1,9 @@
+# First, ignore everything
+*
+
+# Then un-ignore wanted patterns
+!.gitignore
+!*.el
+!/lisp/
+!/lisp/tinyeat/
+!/lisp/tinyeat/*.el
