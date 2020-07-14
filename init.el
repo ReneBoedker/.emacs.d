@@ -3,6 +3,10 @@
 (add-hook 'after-init-hook (lambda ()
 							 (setq gc-cons-threshold (car (get 'gc-cons-threshold 'standard-value)))))
 
+;; The file local-conf contains variables local to the specific machine.
+;; All variables defined there are prefixed with "local-conf"
+(load "~/.emacs.d/local-conf.el")
+
 (require 'package)
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")))
@@ -73,7 +77,7 @@
 (setq read-buffer-completion-ignore-case t)
 
 ;; Customize where backup files are stored
-(setq backup-directory-alist `(("." . "~/emacs/BackupFiles/")))
+(setq backup-directory-alist `(("." . ,local-conf-backup-dir)))
 (setq backup-by-copying t)
 
 ;; Flash mode-line instead of `dinging' (see https://www.emacswiki.org/emacs/AlarmBell)
@@ -455,58 +459,62 @@
   (define-key lsp-mode-map (kbd "C-S-SPC") nil))
 
 ;; === SAGE ===
-(sage-shell:define-alias)
-(defun my-sage-hook ()
-  (setq sage-shell:completion-ignore-case 't))
-(add-hook 'sage-shell-mode-hook 'my-sage-hook)
-
-;; Start SAGE in split-screen mode
-(setq SAGE-not-running t)
-(defadvice run-sage (around run-sage-around activate)
-  "Switch to split-screen mode when starting SAGE"
-  (if SAGE-not-running
-	  (progn
-		(split-window-right)
-		(other-window 1)
-		ad-do-it
-		(other-window -1)
-		(setq SAGE-not-running nil))
-	ad-do-it))
-
-;; Auto-jump to SAGE-shell when sending file
-(defun jumpToSageShell ()
-  "Jump to the window containing the SAGE shell if it exists"
-  (let ((destination (get-buffer-window (get-buffer "*Sage*") 'visible)))
-	(if destination						; Succeeds if destination is non-nil
-		(select-window destination)
+(if local-conf-matlab-installed
+	(sage-shell:define-alias)
+  (defun my-sage-hook ()
+	(setq sage-shell:completion-ignore-case 't))
+  (add-hook 'sage-shell-mode-hook 'my-sage-hook)
+  
+  ;; Start SAGE in split-screen mode
+  (setq SAGE-not-running t)
+  (defadvice run-sage (around run-sage-around activate)
+	"Switch to split-screen mode when starting SAGE"
+	(if SAGE-not-running
+		(progn
+		  (split-window-right)
+		  (other-window 1)
+		  ad-do-it
+		  (other-window -1)
+		  (setq SAGE-not-running nil))
+	  ad-do-it))
+  
+  ;; Auto-jump to SAGE-shell when sending file
+  (defun jumpToSageShell ()
+	"Jump to the window containing the SAGE shell if it exists"
+	(let ((destination (get-buffer-window (get-buffer "*Sage*") 'visible)))
+	  (if destination						; Succeeds if destination is non-nil
+		  (select-window destination)
 		)
-	))
-(advice-add 'sage-shell-edit:send-buffer :after #'jumpToSageShell)
+	  ))
+  (advice-add 'sage-shell-edit:send-buffer :after #'jumpToSageShell)
+  )
 
 
 ;; === MATLAB ===
-(with-eval-after-load 'matlab
-  (setq matlab-shell-command-switches '("-nodesktop -nosplash")))
-
-(defun my-matlab-shell-hook()
-  (company-mode)
-  (local-set-key (kbd "<up>") 'previous-line)
-  (local-set-key (kbd "<down>") 'next-line))
-(add-hook 'matlab-shell-mode-hook 'my-matlab-shell-hook)
-
-;; Execute a line of MATLAB code, and move point to (the vicinity of) the next
-;; command.
-(defun matlab-execute-line()
-  (interactive)
-  (let (beg end)
-	(matlab-beginning-of-command)
-	(setq beg (point))
-	(matlab-end-of-command)
-	(setq end (point))
-	(matlab-forward-sexp)
-	(move-end-of-line nil)
-	(matlab-shell-run-region beg end)))
-
+(if local-conf-matlab-installed
+	(with-eval-after-load 'matlab
+	  (setq matlab-shell-command-switches '("-nodesktop -nosplash")))
+  
+  (defun my-matlab-shell-hook()
+	(company-mode)
+	(local-set-key (kbd "<up>") 'previous-line)
+	(local-set-key (kbd "<down>") 'next-line))
+  (add-hook 'matlab-shell-mode-hook 'my-matlab-shell-hook)
+  
+  ;; Execute a line of MATLAB code, and move point to (the vicinity of) the next
+  ;; command.
+  (defun matlab-execute-line()
+	(interactive)
+	(let (beg end)
+	  (matlab-beginning-of-command)
+	  (setq beg (point))
+	  (matlab-end-of-command)
+	  (setq end (point))
+	  (matlab-forward-sexp)
+	  (move-end-of-line nil)
+	  (matlab-shell-run-region beg end)))
+  )
+  
 ;; Execute the current paragraph in MATLAB, and move to the next
 (defun matlab-execute-par()
   (interactive)
@@ -574,46 +582,50 @@
 
 
 ;; ==== R & ESS ====
-(autoload 'R "ess-r-mode")
-(setq ess-directory "~/Documents/first.math/")
-(defun my-r-mode-hook ()
-  (company-mode)
-  (flyspell-prog-mode)
-  (local-set-key (kbd "_") (lambda () (interactive) (ess-insert-assign "S"))))
-(add-hook 'ess-r-mode-hook 'my-r-mode-hook)
-(add-hook 'inferior-ess-r-mode-hook 'my-r-mode-hook)
-
-;;Start R in split-screen mode
-(setq R-not-running t)
-(defadvice R (around R-around activate)
-  "Switch to split-screen mode when starting R"
-  (if R-not-running
-	  (progn
-		(split-window-right)
-		(other-window 1)
-		ad-do-it
-		(defvar chosen-R-wd (ess-get-working-directory))
-		(other-window 1)
-		(cd chosen-R-wd)
-		(makunbound 'chosen-R-wd)
-		(setq R-not-running nil))
-	ad-do-it))
-
-;;Make .Rhtml-files open in Noweb-mode with html-colouring
-(add-to-list 'auto-mode-alist '("\\.Rhtml\\'" . ess-noweb-mode))
+(if local-conf-r-installed
+	(autoload 'R "ess-r-mode")
+  (setq ess-directory local-conf-r-start-dir)
+  (defun my-r-mode-hook ()
+	(company-mode)
+	(flyspell-prog-mode)
+	(local-set-key (kbd "_") (lambda () (interactive) (ess-insert-assign "S"))))
+  (add-hook 'ess-r-mode-hook 'my-r-mode-hook)
+  (add-hook 'inferior-ess-r-mode-hook 'my-r-mode-hook)
+  
+  ;;Start R in split-screen mode
+  (setq R-not-running t)
+  (defadvice R (around R-around activate)
+	"Switch to split-screen mode when starting R"
+	(if R-not-running
+		(progn
+		  (split-window-right)
+		  (other-window 1)
+		  ad-do-it
+		  (defvar chosen-R-wd (ess-get-working-directory))
+		  (other-window 1)
+		  (cd chosen-R-wd)
+		  (makunbound 'chosen-R-wd)
+		  (setq R-not-running nil))
+	  ad-do-it))
+  
+  ;;Make .Rhtml-files open in Noweb-mode with html-colouring
+  (add-to-list 'auto-mode-alist '("\\.Rhtml\\'" . ess-noweb-mode))
+  )
 
 ;; ==== Emacs Lisp ====
 (add-hook 'emacs-lisp-mode-hook 'company-mode)
 
 ;; ==== Markdown ====
-(defun markdownSetup()
-  (defface markdown-header-face
-	`((t (:inherit 'default)))
-      "Base face for headers."
-      :group 'markdown-faces)
-  (markdown-update-header-faces)
+(if local-conf-use-markdown
+	(defun markdownSetup()
+	  (defface markdown-header-face
+		`((t (:inherit 'default)))
+		"Base face for headers."
+		:group 'markdown-faces)
+	  (markdown-update-header-faces)
+	  )
+  (with-eval-after-load 'markdown-mode 'markdownSetup)
   )
-(with-eval-after-load 'markdown-mode 'markdownSetup)
 
 
 
