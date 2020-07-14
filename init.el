@@ -628,39 +628,6 @@
   )
 
 
-
-
-;; ==== Just for fun ====
-(defun say-what-im-doing-initialize()
-  (interactive)
-  (require 'say-what-im-doing)
-  (setq say-what-im-doing-shell-command "espeak")
-  (setq say-what-im-doing-shell-command-options "-a 100") ; espeak waits for input if no options given
-  (setq say-what-im-doing-common-commands
-		'(
-		  backward-char
-		  delete-backward-char
-		  execute-extended-command
-		  forward-char
-		  keyboard-quit
-		  newline
-		  next-line
-		  previous-line
-		  self-insert-command
-		  right-char
-		  left-char
-		  backward-delete-char-untabify
-		  isearch-printing-char
-		  isearch-delete-char
-		  mwheel-scroll
-		  mouse-set-point
-		  mouse-drag-region
-		  ))
-  (say-what-im-doing-mode)
-  )
-
-
-
 ;; ==== Set via customize ====
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
