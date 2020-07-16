@@ -17,41 +17,22 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 (setq package-enable-at-startup nil)
-(setq package-selected-packages
-	  (quote
-	   (auctex
-		avy
-		benchmark-init
-		browse-kill-ring
-		company
-		company-go
-		company-lsp
-		company-math
-		;;elpy
-		fill-column-indicator
-		gnu-elpa-keyring-update
-		;;go-autocomplete
-		go-eldoc
-		go-rename
-		go-mode
-		golint
-		lsp-mode
-		magit
-		powerthesaurus
-		rainbow-mode
-		;;realgud
-		sage-shell-mode
-		transpose-frame
-		web-mode
-		xterm-color)))
+
 
 ;;==== Server settings ====
-;; Delay starting the server...
-(run-with-idle-timer 5 nil (lambda ()
-							 (require 'server)
-							 ;; ...but only do so if it is not running
-							 (unless (server-running-p)
-							   (server-start))))
+;; Start the server...
+(defun start-server-if-not-running()
+  (require 'server)
+  ;; ...but only do so if it is not running
+  (unless (server-running-p)
+	(server-start))
+  (remove-hook 'focus-out-hook 'start-server-if-not-running)
+  )
+
+;; Call the server start function either if Emacs loses focus or
+;; it has been idle for 5 seconds.
+(add-hook 'focus-out-hook 'start-server-if-not-running)
+(run-with-idle-timer 5 nil 'start-server-if-not-running)
 
 ;;==== Basic settings ====
 (setq inhibit-startup-screen t)			; Don't show the welcome screen
@@ -61,12 +42,11 @@
 (setq compilation-window-height 12)		; Reduce compilation window height
 (winner-mode t)							; Recreate window configuration with winner-undo
 (electric-pair-mode)					; Parenthesis matching
+(setq initial-major-mode 'text-mode)	; Use text-mode for scratch-buffer
 (setq reb-re-syntax (quote string))		; Prevent escape-hell in re-builder
 (setq set-mark-command-repeat-pop t)	; Enable jumping through marks with C-u C-SPC (C-SPC C-SPC...)
 (setq recenter-positions '(middle 0.25 top bottom)) ; Add 25% position to recenter-top-bottom (C-l)
 
-;; Use text-mode in *scratch*
-(setq initial-major-mode 'text-mode)
 
 ;; Force *shell* to open in the current buffer
 (add-to-list 'display-buffer-alist
