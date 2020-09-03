@@ -318,7 +318,7 @@
   
   ;; Highlight frame title in Beamer
   (require 'font-latex)
-  (font-lock-add-keywords 'latex-mode '(("begin{frame}\\(\\[[^]]*\\]\\)?{\\([^}]*\\)}" 2 '(font-latex-slide-title-face))))
+  (font-lock-add-keywords 'latex-mode '(("begin{frame}\\(\\[[^]]*\\]\\)?{\\(.*\\)}$" 2 '(font-latex-slide-title-face))))
   ;; Customize indentation and highlighting
   (setq TeX-brace-indent-level 4)
   (setq preview-scale-function 1.6)
@@ -442,8 +442,8 @@
 (add-hook 'sh-mode-hook 'flycheck-mode)
 
 ;; === SAGE ===
-(if local-conf-matlab-installed
-	(sage-shell:define-alias)
+(when local-conf-matlab-installed
+  (sage-shell:define-alias)
   (defun my-sage-hook ()
 	(setq sage-shell:completion-ignore-case 't))
   (add-hook 'sage-shell-mode-hook 'my-sage-hook)
@@ -466,15 +466,12 @@
 	"Jump to the window containing the SAGE shell if it exists"
 	(let ((destination (get-buffer-window (get-buffer "*Sage*") 'visible)))
 	  (if destination						; Succeeds if destination is non-nil
-		  (select-window destination)
-		)
-	  ))
-  (advice-add 'sage-shell-edit:send-buffer :after #'jumpToSageShell)
-  )
+		  (select-window destination))))
+  (advice-add 'sage-shell-edit:send-buffer :after #'jumpToSageShell))
 
 
 ;; === MATLAB ===
-(if local-conf-matlab-installed
+(when local-conf-matlab-installed
 	(with-eval-after-load 'matlab
 	  (setq matlab-shell-command-switches '("-nodesktop -nosplash")))
   
@@ -482,6 +479,7 @@
 	(company-mode)
 	(local-set-key (kbd "<up>") 'previous-line)
 	(local-set-key (kbd "<down>") 'next-line))
+  
   (add-hook 'matlab-shell-mode-hook 'my-matlab-shell-hook)
   
   ;; Execute a line of MATLAB code, and move point to (the vicinity of) the next
@@ -565,7 +563,7 @@
 
 
 ;; ==== R & ESS ====
-(if local-conf-r-installed
+(when local-conf-r-installed
 	(autoload 'R "ess-r-mode")
   (setq ess-directory local-conf-r-start-dir)
   (defun my-r-mode-hook ()
@@ -599,7 +597,7 @@
 (add-hook 'emacs-lisp-mode-hook 'company-mode)
 
 ;; ==== Markdown ====
-(if local-conf-use-markdown
+(when local-conf-use-markdown
 	(defun markdownSetup()
 	  (defface markdown-header-face
 		`((t (:inherit 'default)))
