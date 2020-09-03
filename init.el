@@ -438,6 +438,9 @@
 (with-eval-after-load 'lsp-mode
   (define-key lsp-mode-map (kbd "C-S-SPC") nil))
 
+;; === Bash ===
+(add-hook 'sh-mode-hook 'flycheck-mode)
+
 ;; === SAGE ===
 (if local-conf-matlab-installed
 	(sage-shell:define-alias)
