@@ -318,7 +318,7 @@
   
   ;; Highlight frame title in Beamer
   (require 'font-latex)
-  (font-lock-add-keywords 'latex-mode '(("begin{frame}\\(\\[[^]]*\\]\\)?{\\([^}]*\\)}" 2 '(font-latex-slide-title-face))))
+  (font-lock-add-keywords 'latex-mode '(("begin{frame}\\(\\[[^]]*\\]\\)?{\\(.*\\)}$" 2 '(font-latex-slide-title-face))))
   ;; Customize indentation and highlighting
   (setq TeX-brace-indent-level 4)
   (setq preview-scale-function 1.6)
