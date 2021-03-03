@@ -384,7 +384,7 @@
 
 ;; ==== Go ====
 (defun my-go-mode-hook ()
-  (go-eldoc-setup)
+  ;;(go-eldoc-setup)
 
   (add-hook 'before-save-hook 'gofmt-before-save) ; Call Gofmt before saving
   ;; Customize compile command to run go build
@@ -406,7 +406,7 @@
   (flyspell-prog-mode) 					; Use flyspell to check comments
   (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
   (require 'golint)
-  (require 'go-eldoc)
+  ;;(require 'go-eldoc)
   ;; Setup autocompletion
   (require 'company)
   (lsp-deferred)
@@ -434,8 +434,11 @@
   )
 (add-hook 'go-mode-hook 'my-go-mode-hook)
 
-;; Prevent lsp-mode from overriding tinyeat-join-lines
+;; Customize lsp-mode behaviour
 (with-eval-after-load 'lsp-mode
+  ;; Disable the headerline
+  (setq lsp-headerline-breadcrumb-enable nil)
+  ;; Prevent lsp-mode from overriding tinyeat-join-lines
   (define-key lsp-mode-map (kbd "C-S-SPC") nil))
 
 ;; === Bash ===
