@@ -445,7 +445,7 @@
 (add-hook 'sh-mode-hook 'flycheck-mode)
 
 ;; === SAGE ===
-(when local-conf-matlab-installed
+(when local-conf-sage-installed
   (sage-shell:define-alias)
   (defun my-sage-hook ()
 	(setq sage-shell:completion-ignore-case 't))
