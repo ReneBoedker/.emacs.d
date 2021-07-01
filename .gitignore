@@ -3,6 +3,7 @@
 
 # Then un-ignore wanted patterns
 !.gitignore
+!README.md
 !*.el
 !/lisp/
 !/lisp/tinyeat/

@@ -1,8 +1,12 @@
-;;; smooth-jazz-theme.el --- A warm color theme for Emacs 24.
+;;; print-jazz-theme.el --- A warm color theme for Emacs 24.
 
-;; Copyright (C) 2012 Roman Parykin, Bozhidar Batsov
+;; Copyright (C) 2020 René B. Christensen, Roman Parykin, Bozhidar Batsov
 
-;; Author: Roman Parykin <donderom@ymail.com> (Modified)
+;; Alteration of the original jazz theme to allow buffer printing
+;; Author: René B. Christensen <mail@rene-bc.dk>
+
+;; Based on jazz-theme.el
+;; Author: Roman Parykin <donderom@ymail.com>
 ;; URL: https://github.com/donderom/jazz-theme
 ;; Version: 1.0
 
