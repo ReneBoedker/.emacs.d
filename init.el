@@ -115,6 +115,12 @@
 (global-set-key (kbd "H-M-o") 'forward-paragraph)
 (global-set-key (kbd "H-M-u") 'backward-paragraph)
 
+;; Use shell-style bindings to move through history
+(defun rebindComint ()
+  (local-set-key (kbd "<up>") 'comint-previous-input)
+  (local-set-key (kbd "<down>") 'comint-next-input))
+(add-hook 'shell-mode-hook 'rebindComint)
+
 
 (add-to-list 'load-path "~/.emacs.d/lisp/tinyeat/")
 (load "~/.emacs.d/lisp/tinyeat/tinyeat-autoload.elc") ; Autoload Tinyeat
