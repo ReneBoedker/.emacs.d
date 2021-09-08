@@ -85,6 +85,11 @@
 (setq mouse-wheel-follow-mouse t)		 ; Scroll window below OS-cursor
 
 (global-set-key (kbd "C-x g") 'magit-status) ; Open Magit
+(defun magitKeys()
+  (local-set-key (kbd "C-n") 'forward-paragraph)
+  (local-set-key (kbd "C-p") 'backward-paragraph))
+(add-hook 'magit-status-mode-hook 'magitKeys)
+
 
 ;; Define a jump function for Avy that accepts C-u modifier
 (defun my-avy-jump (twoChars)
