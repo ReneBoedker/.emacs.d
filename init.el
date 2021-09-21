@@ -18,6 +18,10 @@
 (package-initialize)
 (setq package-enable-at-startup nil)
 
+;; === Setup customize ===
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
+
 
 ;;==== Server settings ====
 ;; Start the server...
@@ -134,7 +138,7 @@
 ;; ==== Appearance ====
 ;;Set default font as Source Code Pro Semi-bold (done in ~/.Xresources instead)
 ;;(set-face-attribute 'default nil :font "Source Code Pro Semibold" :height 120)
-(load-theme 'jazz t)					; Load colour theme
+(load-theme 'jazz)						; Load colour theme
 (show-paren-mode 1)						; Turn on parenthesis-highlighting
 (setq-default tab-width 4)				; Default tab-size
 (setq x-stretch-cursor t)				; Stretch cursor (for instance for TAB)
@@ -621,11 +625,6 @@
 	  )
   (with-eval-after-load 'markdown-mode 'markdownSetup)
   )
-
-
-;; === Setup customize ===
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
 
 
 
