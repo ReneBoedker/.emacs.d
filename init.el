@@ -407,7 +407,7 @@
       (set (make-local-variable 'compile-command)
            "go build -v && go test -cover -v && go vet"))
   ;; Local keybindings
-  (local-set-key (kbd "M-.") 'godef-jump)
+  (local-set-key (kbd "M-.") 'lsp-find-definition)
   (local-set-key (kbd "M-*") 'pop-tag-mark)
   (local-set-key (kbd "C-c C-c") 'compile)
   ;; Mark column 80...
