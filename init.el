@@ -587,7 +587,8 @@
   (defun my-r-mode-hook ()
 	(company-mode)
 	(flyspell-prog-mode)
-	(local-set-key (kbd "_") (lambda () (interactive) (ess-insert-assign "S"))))
+	(local-set-key (kbd "_") (lambda () (interactive) (ess-insert-assign "S")))
+	(setq polymode-display-output-file nil))
   (add-hook 'ess-r-mode-hook 'my-r-mode-hook)
   (add-hook 'inferior-ess-r-mode-hook 'my-r-mode-hook)
   
