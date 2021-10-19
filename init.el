@@ -129,6 +129,7 @@
   (local-set-key (kbd "<up>") 'comint-previous-input)
   (local-set-key (kbd "<down>") 'comint-next-input))
 (add-hook 'shell-mode-hook 'rebindComint)
+(add-hook 'inferior-ess-mode-hook 'rebindComint)
 
 
 (add-to-list 'load-path "~/.emacs.d/lisp/tinyeat/")
