@@ -18,6 +18,10 @@
 (package-initialize)
 (setq package-enable-at-startup nil)
 
+;; === Setup customize ===
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
+
 
 ;;==== Server settings ====
 ;; Start the server...
@@ -85,6 +89,11 @@
 (setq mouse-wheel-follow-mouse t)		 ; Scroll window below OS-cursor
 
 (global-set-key (kbd "C-x g") 'magit-status) ; Open Magit
+(defun magitKeys()
+  (local-set-key (kbd "C-n") 'forward-paragraph)
+  (local-set-key (kbd "C-p") 'backward-paragraph))
+(add-hook 'magit-status-mode-hook 'magitKeys)
+
 
 ;; Define a jump function for Avy that accepts C-u modifier
 (defun my-avy-jump (twoChars)
@@ -120,6 +129,7 @@
   (local-set-key (kbd "<up>") 'comint-previous-input)
   (local-set-key (kbd "<down>") 'comint-next-input))
 (add-hook 'shell-mode-hook 'rebindComint)
+(add-hook 'inferior-ess-mode-hook 'rebindComint)
 
 
 (defun my-point-dwim (recall)
@@ -137,7 +147,7 @@
 ;; ==== Appearance ====
 ;;Set default font as Source Code Pro Semi-bold (done in ~/.Xresources instead)
 ;;(set-face-attribute 'default nil :font "Source Code Pro Semibold" :height 120)
-(load-theme 'jazz t)					; Load colour theme
+(load-theme 'jazz)						; Load colour theme
 (show-paren-mode 1)						; Turn on parenthesis-highlighting
 (setq-default tab-width 4)				; Default tab-size
 (setq x-stretch-cursor t)				; Stretch cursor (for instance for TAB)
@@ -406,7 +416,7 @@
       (set (make-local-variable 'compile-command)
            "go build -v && go test -cover -v && go vet"))
   ;; Local keybindings
-  (local-set-key (kbd "M-.") 'godef-jump)
+  (local-set-key (kbd "M-.") 'lsp-find-definition)
   (local-set-key (kbd "M-*") 'pop-tag-mark)
   (local-set-key (kbd "C-c C-c") 'compile)
   ;; Mark column 80...
@@ -586,7 +596,8 @@
   (defun my-r-mode-hook ()
 	(company-mode)
 	(flyspell-prog-mode)
-	(local-set-key (kbd "_") (lambda () (interactive) (ess-insert-assign "S"))))
+	(local-set-key (kbd "_") (lambda () (interactive) (ess-insert-assign "S")))
+	(setq polymode-display-output-file nil))
   (add-hook 'ess-r-mode-hook 'my-r-mode-hook)
   (add-hook 'inferior-ess-r-mode-hook 'my-r-mode-hook)
   
@@ -624,11 +635,6 @@
 	  )
   (with-eval-after-load 'markdown-mode 'markdownSetup)
   )
-
-
-;; === Setup customize ===
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
 
 
 
