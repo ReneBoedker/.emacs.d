@@ -122,6 +122,14 @@
 (add-hook 'shell-mode-hook 'rebindComint)
 
 
+(defun my-point-dwim (recall)
+  (interactive "P")
+  (if recall
+	  (call-interactively 'jump-to-register)
+	(call-interactively 'point-to-register)))
+(global-set-key (kbd "C-'") 'my-point-dwim)
+
+
 (add-to-list 'load-path "~/.emacs.d/lisp/tinyeat/")
 (load "~/.emacs.d/lisp/tinyeat/tinyeat-autoload.elc") ; Autoload Tinyeat
 
