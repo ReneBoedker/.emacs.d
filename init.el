@@ -59,6 +59,7 @@
 ;; Auto-correct case in filenames
 (setq read-file-name-completion-ignore-case t)
 (setq read-buffer-completion-ignore-case t)
+(setq pcomplete-ignore-case t)
 
 ;; Customize where backup files are stored
 (setq backup-directory-alist `(("." . ,local-conf-backup-dir)))
