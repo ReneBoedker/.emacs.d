@@ -91,6 +91,8 @@
 
 (global-set-key (kbd "C-x g") 'magit-status) ; Open Magit
 (defun magitKeys()
+  (local-set-key (kbd "n") 'magit-next-line)
+  (local-set-key (kbd "p") 'magit-previous-line)
   (local-set-key (kbd "C-n") 'forward-paragraph)
   (local-set-key (kbd "C-p") 'backward-paragraph))
 (add-hook 'magit-status-mode-hook 'magitKeys)
