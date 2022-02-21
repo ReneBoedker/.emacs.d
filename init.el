@@ -132,7 +132,10 @@
   (local-set-key (kbd "<up>") 'comint-previous-input)
   (local-set-key (kbd "<down>") 'comint-next-input))
 (add-hook 'shell-mode-hook 'rebindComint)
-(add-hook 'inferior-ess-mode-hook 'rebindComint)
+(when local-conf-r-installed
+  (add-hook 'inferior-ess-mode-hook 'rebindComint))
+(when local-conf-matlab-installed
+  (add-hook 'matlab-shell-mode-hook 'rebindComint))
 
 
 (defun my-point-dwim (recall)
