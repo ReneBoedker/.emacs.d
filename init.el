@@ -215,6 +215,7 @@
 
 ;; === Re-enable commands ===
 (put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)	; Narrow with C-x n n, widen with C-x n w
 (put 'set-goal-column 'disabled nil)	; Set a 'goal' column with C-x C-n. Unset by prepending C-u
 
