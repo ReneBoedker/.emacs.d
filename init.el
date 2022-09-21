@@ -202,7 +202,7 @@
 ;; Enable Powerthesaurus in modes derived from text-mode
 (add-hook 'text-mode-hook
 		  (lambda ()
-			(local-set-key (kbd "C-x t") 'powerthesaurus-lookup-word-dwim) ; Setup Powerthesaurus
+			(local-set-key (kbd "C-x t") 'powerthesaurus-lookup) ; Setup Powerthesaurus
 			))
 
 ;; === Autocompletion ===
