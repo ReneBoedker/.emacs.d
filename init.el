@@ -50,6 +50,7 @@
 (setq reb-re-syntax (quote string))		; Prevent escape-hell in re-builder
 (setq set-mark-command-repeat-pop t)	; Enable jumping through marks with C-u C-SPC (C-SPC C-SPC...)
 (setq recenter-positions '(middle 0.25 top bottom)) ; Add 25% position to recenter-top-bottom (C-l)
+(setq magit-diff-refine-hunk 'all)
 
 
 ;; Force *shell* to open in the current buffer
