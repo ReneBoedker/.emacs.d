@@ -599,7 +599,7 @@
 
 ;; ==== R & ESS ====
 (when local-conf-r-installed
-	(autoload 'R "ess-r-mode")
+	(autoload 'R "ess-r-mode" nil t)
   (setq ess-directory local-conf-r-start-dir)
   (defun my-r-mode-hook ()
 	(company-mode)
